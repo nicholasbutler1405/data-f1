@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data F1</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Chivo+Mono:ital,wght@0,100..900;1,100..900&family=Funnel+Display:wght@300..800&family=Michroma&family=Russo+One&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --accent: rgb(255, 208, 37);
+            --red-accent: rgb(255, 30, 22);
+            --accent-second: rgba(255, 208, 37, 0.5);
+            --accent-transparent: rgba(255, 208, 37, 0.1);
+        }
+
+        .funnel-display {
+            font-family: "Funnel Display", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 300;
+            font-style: normal;
+        }
+
+        body {
+            font-family: "Funnel Display";
+            height: 100vh;
+            display: flex;
+            margin: 0;
+            padding: 0;
+            flex-direction: column;
+            overflow: hidden;
+            background-color: rgb(250, 250, 250);
+        }
+
+        .main-content-box {
+            display: flex;
+            flex-direction: row;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .header {
+            font-size: 40px;
+            width: 100%;
+            border-bottom: 1px solid gray;
+            box-sizing: border-box;
+            flex-shrink: 0;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            padding-left: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .header b {
+            cursor: pointer;
+        }
+
+        .header-divider {
+            width: 1px;
+            background-color: gray;
+            margin: 0;
+            margin-right: 15px;
+            height: 100%;
+        }
+
+        .header-item {
+            margin: 0;
+            font-size: 20px;
+            height: calc(100% + 30px);
+            width: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .header-item:hover {
+            background-color: var(--accent);
+        }
+
+        .logo-f1 {
+            background-color: var(--accent);
+            padding: 5px;
+            border-radius: 5px;
+            margin-right: 15px;
+        }
+
+        #driver-sidebar {
+            font-size: 13px;
+            width: 180px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            border-right: 1px solid gray;
+            position: sticky;
+            top: 0;
+        }
+
+        #driver-box {
+            flex: 1;
+            padding: 10px;
+            padding-top: 0px;
+            display: none;
+            flex-direction: column;
+            overflow-y: none;
+        }
+
+        #first-page {
+            display: flex;
+            flex-direction: row;
+            padding-top: 10px;
+        }
+
+        .initial-message {
+            flex: 1;
+            height: 100%;
+            width: 100%;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: gray;
+            font-size: 30px;
+        }
+
+        .sidebar-name {
+            padding: 5px;
+            margin: 0px;
+            cursor: pointer;
+        }
+
+        .sidebar-name.selected {
+            font-weight: bold;
+            background-color: var(--accent);
+        }
+
+        .sidebar-name.selectedSecond {
+            font-weight: bold;
+            background-color: var(--accent-second);
+        }
+
+        .sidebar-name:hover {
+            background-color: var(--accent);
+        }
+
+        #driver-headshot {
+            height: 200px;
+            width: 200px;
+            border: 1px solid rgb(195, 195, 195);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .headshot-image {
+            height: 100%;
+            width: 100%;
+        }
+
+        #driver-first-name {
+            padding: 0;
+            margin: 0;
+            font-size: 20px;
+            color: gray;
+            margin-bottom: 5px;
+        }
+
+        #driver-last-name {
+            padding: 0;
+            margin: 0;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        #team-info {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        #team-colour {
+            width: 5px;
+            height: 30px;
+        }
+
+        #team-name {
+            margin: 0;
+            margin-left: 5px;
+        }
+
+        .info-line {
+            padding: 0;
+            margin: 0;
+            margin-top: 5px;
+            font-size: 15px;
+        }
+
+        #stats-text {
+            font-size: 25px;
+            padding: 0;
+            margin: 0;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        #info-wrapper {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #basic-info {
+            display: flex;
+            flex-direction: column;
+            margin-left: 0;
+            margin-top: 10px;
+        }
+
+        #driver-profile {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #driver-data {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            margin-left: 50px;
+        }
+
+        #data-wrapper {
+            display: flex;
+            flex-direction: row;
+            gap: 25px;
+        }
+
+        #driver-form {
+            width: 350px;
+            height: 230px;
+            border: 1px solid gray;
+            box-sizing: border-box;
+            padding: 5px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #form-chart {
+            max-width: 340px;
+        }
+
+        h3 {
+            margin: 0;
+            margin-bottom: 10px;
+        }
+
+        #skill-profile {
+            padding: 5px;
+            width: 350px;
+            height: 230px;
+            border: 1px solid gray;
+            box-sizing: border-box;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #skill-profile h3 {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+        }
+
+        #championship-positions {
+            padding: 5px;
+            width: 725px;
+            height: 270px;
+            border: 1px solid gray;
+            box-sizing: border-box;
+        }
+
+        #championship-chart {
+            max-height: 220px;
+            max-width: 715px;
+        }
+
+        #skill-chart {
+            max-height: 190px;
+            max-width: 330px;
+        }
+
+        #view-season-box {
+            display: flex;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        #view-season-text {
+            margin: 0;
+            margin-top: 15px;
+            font-size: 20px;
+        }
+
+        #second-page {
+            width: 100%;
+            min-height: calc(100% - 45px);
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        #full-season {
+            width: 95%;
+            height: 95%;
+            border: 1px solid gray;
+            box-sizing: border-box;
+            padding: 5px;
+        }
+
+        #season-chart {
+            max-height: 90%;
+            max-width: 100%;
+        }
+
+        #h2h-box {
+            display: none;
+            flex: 1;
+            padding: 10px;
+        }
+
+        #drivers-header {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .h2h-driver {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .h2h-headshot-box {
+            height: 150px;
+            width: 150px;
+            border: 1px solid gray
+        }
+
+        .h2h-info {
+            display: flex;
+            flex-direction: column;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        #driver2-info {
+            text-align: right;
+        }
+
+        .h2h-name {
+            font-size: 25px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        #driver2-name {
+            text-align: right;
+        }
+
+        .h2h-team {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        #driver2-team {
+            justify-content: flex-end;
+        }
+
+        .h2h-team-colour {
+            width: 5px;
+            height: 30px;
+        }
+
+        .h2h-team-name {
+            font-size: 15px;
+            margin-left: 5px;
+        }
+
+        #driver2-team-text {
+            margin-left: 0;
+            margin-right: 5px;
+        }
+
+        .h2h-line {
+            height: 0px;
+            width: 200px;
+            border: 2px solid;
+        }
+
+        #versus-text {
+            color: gray;
+            font-size: 40px;
+            font-weight: bolder;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        .h2h-last-name {
+            font-size: 30px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.11.0/css/flag-icons.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script>
+        let formChart = null
+        let h2hVisitied = false
+        let driver1 = null
+        let driver2 = null
+        let driver1Colour = ""
+        let driverInfo = true
+
+        const countryToCode = {
+            'Australia': 'AUS',
+            'Hungary': 'HUN',
+            'Belgium': 'BEL',
+            'Austria': 'AUT',
+            'Canada': 'CAN',
+            'Spain': 'ESP',
+            'Italy': 'ITA',
+            'Germany': 'GER',
+            'Netherlands': 'NLD',
+            'France': 'FRA',
+            'Japan': 'JPN',
+            'Brazil': 'BRA',
+            'Mexico': 'MEX',
+            'Monaco': 'MON',
+            'UK': 'GBR',
+            'United Kingdom': 'GBR',
+            'USA': 'USA',
+            'United States': 'USA',
+            'Singapore': 'SGP',
+            'Azerbaijan': 'AZE',
+            'Bahrain': 'BHR',
+            'Saudi Arabia': 'SAU',
+            'Qatar': 'QAT',
+            'UAE': 'UAE',
+            'China': 'CHN'
+        }
+
+        fetch('./drivers-2025.csv')
+            .then(response => response.text())
+            .then(csvText => {
+                const drivers = Papa.parse(csvText, {
+                    header: true,
+                    dynamicTyping: true,
+                    skipEmptyLines: true
+                }).data
+
+                const driverNames = drivers.map(driver => `<p class='sidebar-name' data-id='${driver.driverId}'>${driver.firstName} ${driver.lastName.toUpperCase()}</p>`).join('')
+
+                document.getElementById('driver-sidebar').innerHTML = driverNames
+
+                window.driversData = drivers
+            })
+
+
+
+        $(document).ready(function () {
+            $(document).on('click', '#driver-sidebar .sidebar-name', function () {
+                if (driverInfo) {
+                    $(".initial-message").hide()
+                    $("#driver-box").css('display', 'flex')
+                    const accentColour = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()
+                    const accentTransparent = getComputedStyle(document.documentElement).getPropertyValue('--accent-transparent').trim()
+
+                    $('.sidebar-name').removeClass('selected')
+                    $(this).addClass('selected')
+                    //get the selected name
+                    const driverId = $(this).data('id')
+                    const selectedDriver = window.driversData.find(driver => driver.driverId == driverId)
+                    let headshotUrl = selectedDriver.Headshot
+                    let firstName = selectedDriver.firstName
+                    let lastName = selectedDriver.lastName
+                    let nationality = selectedDriver.nationality
+                    let dob = selectedDriver.dateOfBirth
+                    let championships = selectedDriver.Championships
+                    let wins = selectedDriver.Wins
+                    let podiums = selectedDriver.Podiums
+                    let points = selectedDriver.Points
+                    let allPositions = selectedDriver.AllPositions
+                    let qualifyingPerformance = selectedDriver.QualifyingPerformance || 0
+                    let racePacePerformance = selectedDriver.RacePace || 0
+                    let entries = selectedDriver.Entries
+                    let teamName = selectedDriver.TeamName
+                    let teamColour = selectedDriver.TeamColour
+
+                    if (headshotUrl && headshotUrl.includes('.transform/1col/image.png')) {
+                        headshotUrl = headshotUrl.replace('.transform/1col/image.png', '')
+                    }
+
+                    if (headshotUrl) {
+                        $('#driver-headshot').html(`<img class='headshot-image' src=${headshotUrl}>`)
+                    } else {
+                        $('#driver-headshot').html(`<p>Image not found</p>`)
+                    }
+
+                    $('#driver-last-name').text(lastName.toUpperCase())
+                    $('#driver-first-name').text(firstName)
+                    $("#team-colour").css('background-color', `#${teamColour}`)
+                    $("#team-name").text(teamName)
+                    $('#driver-nationality').text(nationality)
+                    $('#driver-dob').text(dob)
+                    $('#driver-championships').text(championships)
+                    $('#driver-wins').text(wins)
+                    $('#driver-podiums').text(podiums)
+                    $('#driver-points').text(points)
+
+                    $('#driver-form').html('<h3>Recent form</h3><canvas id="form-chart"></canvas>')
+
+                    const allRaceResults = JSON.parse(selectedDriver.SeasonResults.replace(/'/g, '"'))
+                    const recentForm = allRaceResults.slice(-5)
+
+                    if (recentForm && recentForm.length > 0) {
+                        if (formChart) formChart.destroy()
+
+                        const ctx = document.getElementById('form-chart').getContext('2d')
+                        const labels = recentForm.map(race => countryToCode[race.country] || race.country)
+                        const positions = recentForm.map(race => parseInt(race.racePosition))
+
+                        formChart = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    data: positions,
+                                    borderColor: accentColour,
+                                    backgroundColor: accentColour,
+                                    borderWidth: 2,
+                                    fill: false
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                scales: {
+                                    x: {
+                                        ticks: {
+                                            font: {
+                                                size: 11
+                                            },
+                                            maxRotation: 0
+                                        }
+                                    },
+                                    y: {
+                                        reverse: true,
+                                        min: 1,
+                                        max: 20
+                                    }
+                                },
+                                plugins: {
+                                    legend: { display: false }
+                                }
+                            }
+                        })
+                    } else {
+                        $('#driver-form').html('<h3>Recent form</h3><p>No data available</p>')
+                    }
+
+                    try {
+                        let allPositionsArray = JSON.parse(allPositions.replace(/'/g, '"'))
+
+                        let positions = []
+                        let roundLabels = []
+
+                        for (let roundPosition of allPositionsArray) {
+                            const [roundNum, position] = roundPosition.split('&')
+                            roundLabels.push(`R${roundNum}`)
+                            positions.push(parseInt(position))
+                        }
+
+                        //let positions = allPositionsArray.map(pos => parseInt(pos))
+
+                        $('#championship-positions').html('<h3>Championship Position</h3><canvas id="championship-chart"></canvas>')
+
+                        const championshipCtx = document.getElementById('championship-chart').getContext('2d')
+                        //const roundLabels = positions.map((_, index) => `R${index + 1}`)
+
+                        new Chart(championshipCtx, {
+                            type: 'line',
+                            data: {
+                                labels: roundLabels,
+                                datasets: [{
+                                    data: positions,
+                                    borderColor: accentColour,
+                                    backgroundColor: accentColour,
+                                    borderWidth: 2,
+                                    fill: false
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                scales: {
+                                    x: {
+                                        ticks: {
+                                            font: {
+                                                size: 11
+                                            },
+                                            maxRotation: 0
+                                        },
+                                        title: { display: false }
+                                    },
+                                    y: {
+                                        reverse: true,
+                                        min: 1,
+                                        max: 21,
+                                        ticks: {
+                                            stepSize: 1
+                                        },
+                                        title: { display: false }
+                                    }
+                                },
+                                plugins: {
+                                    legend: { display: false },
+                                    title: { display: false }
+                                }
+                            }
+                        })
+                    } catch (error) {
+                        console.error('Error parsing championship positions: ', error)
+                        $('#championship-positions').html('<h3>Championship Position</h3><p>No data available</p>')
+                    }
+
+                    //let qualifyingRadius = Math.max(10, Math.min(80, ((qualifyingPerformance + 5) / 10) * 70 + 10))
+
+                    $('#skill-profile').html('<h3>Skill Profile</h3><canvas id="skill-chart"></canvas>')
+
+                    //let maxEntries = Math.max(...window.driversData.map(driver => driver.Entries || 0))
+                    let maxEntries = 300
+                    let expPercentage = maxEntries > 0 ? (entries / maxEntries) * 100 : 0
+
+                    //let normalisedQualifying = Math.max(0, Math.min(10, ((qualifyingPerformance + 5) / 10) * 10))
+                    //let normalisedRacePace = Math.max(0, Math.min(10, ((racePacePerformance + 5) / 10) * 10))
+                    //let normalisedExperience = Math.max(0, Math.min(10, (expPercentage / 100) * 10))
+
+                    let normalisedQualifying = Math.max(0, Math.min(10, qualifyingPerformance + 5))
+                    let normalisedRacePace = Math.max(0, Math.min(10, racePacePerformance + 5))
+                    let normalisedExperience = Math.max(0, Math.min(10, (expPercentage / 100) * 10))
+
+                    console.log("race: ", normalisedRacePace)
+
+                    const skillCtx = document.getElementById('skill-chart')
+
+                    new Chart(skillCtx, {
+                        type: 'radar',
+                        data: {
+                            labels: ['Qualifying Pace', 'Race Pace', 'Experience'],
+                            datasets: [{
+                                data: [normalisedQualifying, normalisedRacePace, normalisedExperience],
+                                borderColor: accentColour,
+                                backgroundColor: accentTransparent,
+                                borderWidth: 2,
+                                pointBackgroundColor: accentColour,
+                                pointBorderColor: accentColour,
+                                pointRadius: 4
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                r: {
+                                    beginAtZero: true,
+                                    min: 0,
+                                    max: 10,
+                                    ticks: {
+                                        stepSize: 2,
+                                        display: false
+                                    },
+                                    grid: {
+                                        color: 'rgb(235, 235, 235)'
+                                    },
+                                    angleLines: {
+                                        color: 'rgb(195, 195, 195)'
+                                    },
+                                    pointLabels: {
+                                        font: {
+                                            size: 11
+                                        },
+                                        color: 'rgb(165, 165, 165)'
+                                    }
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    display: false
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function (context) {
+                                            const labels = ['Qualifying: ', 'Race Pace: ', 'Experience: ']
+                                            let value = context.parsed.r.toFixed(1)
+
+                                            if (context.dataIndex === 0) {
+                                                value = `${normalisedQualifying.toFixed(2)}`
+                                            } else if (context.dataIndex === 1) {
+                                                value = `${normalisedRacePace.toFixed(2)}`
+                                            } else if (context.dataIndex === 2) {
+                                                value = `${entries} races`
+                                            }
+
+                                            return labels[context.dataIndex] + value
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    })
+
+                    $('#full-season').html('<h3>Season Results</h3><canvas id="season-chart"></canvas>')
+
+                    let qualiResults = allRaceResults.map(race => race.qualiPosition)
+                    let raceResults = allRaceResults.map(race => race.racePosition)
+
+                    let labels = allRaceResults.map(race => countryToCode[race.country] || race.country)
+
+                    const seasonCtx = document.getElementById('season-chart').getContext('2d')
+
+                    new Chart(seasonCtx, {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [
+                                {
+                                    label: 'Qualifying',
+                                    data: qualiResults,
+                                    borderColor: 'silver',
+                                    backgroundColor: 'silver',
+                                    borderWidth: 2,
+                                    fill: false,
+                                    borderDash: [5, 5],
+                                    pointRadius: 3
+                                },
+                                {
+                                    label: 'Race',
+                                    data: raceResults,
+                                    borderColor: accentColour,
+                                    backgroundColor: accentColour,
+                                    borderWidth: 2,
+                                    fill: false,
+                                    pointRadius: 3
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                x: {
+                                    ticks: {
+                                        font: {
+                                            size: 10
+                                        },
+                                        maxRotation: 45
+                                    }
+                                },
+                                y: {
+                                    reverse: true,
+                                    min: 1,
+                                    max: 20,
+                                    ticks: {
+                                        stepSize: 1
+                                    },
+                                    title: {
+                                        display: false,
+                                        text: 'Position'
+                                    }
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    display: true,
+                                    position: 'top'
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function (context) {
+                                            return null
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    })
+                } else {
+                    h2hVisitied = true
+                    $("#h2h-box").show()
+                    $('.initial-message').hide()
+                    if (driver1 == null) {
+                        driver1 = $(this)
+                        driver1.addClass('selected')
+                        setAsDriver1(driver1)
+                    } else if (driver2 == null && !$(this).hasClass('selected') && !$(this).hasClass('selectedSecond')) {
+                        driver2 = $(this)
+                        driver1.removeClass('selected')
+                        driver1.addClass('selectedSecond')
+                        driver2.addClass('selected')
+                        setAsDriver1(driver1)
+                        setAsDriver2(driver2)
+                    } else if (!$(this).hasClass('selected') && !$(this).hasClass('selectedSecond')) {
+                        driver1.removeClass('selectedSecond')
+                        driver2.removeClass('selected')
+                        driver1 = driver2
+                        driver2 = $(this)
+                        driver1.addClass('selectedSecond')
+                        driver2.addClass('selected')
+                        setAsDriver1(driver1)
+                        setAsDriver2(driver2)
+                    }
+                }
+            })
+
+            function resetH2h() {
+                $('#driver1-headshot-box').empty()
+                $('#driver2-headshot-box').empty()
+                $('#driver1-name').text('')
+                $('#driver2-name').text('')
+                $('#driver1-team-text').text('')
+                $('#driver2-team-text').text('')
+                $('#driver1-team-colour').css('background-color', '')
+                $('#driver2-team-colour').css('background-color', '')
+                $('#driver1-line').css('border-color', '').css('border', '')
+                $('#driver2-line').css('border-color', '').css('border', '')
+
+            }
+
+            function setAsDriver1(driver) {
+                const driverId = $(driver).data('id')
+
+                const selectedDriver = window.driversData.find(driver => driver.driverId == driverId)
+                let firstName = selectedDriver.firstName
+                let lastName = selectedDriver.lastName
+                let headshotUrl = selectedDriver.Headshot
+                let teamName = selectedDriver.TeamName
+                let teamColour = selectedDriver.TeamColour
+
+                if (headshotUrl && headshotUrl.includes('.transform/1col/image.png')) {
+                    headshotUrl = headshotUrl.replace('.transform/1col/image.png', '')
+                }
+
+                $('#driver1-headshot-box').html(`<img class='headshot-image' src="${headshotUrl}">`)
+                $('#driver1-name').html(`${firstName}<br><span class="h2h-last-name">${lastName.toUpperCase()}</span>`)
+                $('#driver1-team-colour').css('background-color', `#${teamColour}`)
+                $('#driver1-team-text').text(teamName)
+                $('#driver1-line').css('border-color', `#${teamColour}`)
+                driver1Colour = teamColour
+            }
+
+            function setAsDriver2(driver) {
+                const driverId = $(driver).data('id')
+
+                const selectedDriver = window.driversData.find(driver => driver.driverId == driverId)
+                let firstName = selectedDriver.firstName
+                let lastName = selectedDriver.lastName
+                let headshotUrl = selectedDriver.Headshot
+                let teamName = selectedDriver.TeamName
+                let teamColour = selectedDriver.TeamColour
+
+                if (headshotUrl && headshotUrl.includes('.transform/1col/image.png')) {
+                    headshotUrl = headshotUrl.replace('.transform/1col/image.png', '')
+                }
+
+                $('#driver2-headshot-box').html(`<img class='headshot-image' src="${headshotUrl}">`)
+                $('#driver2-name').html(`${firstName}<br><span class="h2h-last-name">${lastName.toUpperCase()}</span>`)
+                $('#driver2-team-colour').css('background-color', `#${teamColour}`)
+                $('#driver2-team-text').text(teamName)
+                $('#driver2-line').css('border-color', `#${teamColour}`)
+                if (teamColour == driver1Colour) {
+                    $('#driver2-line').css('border', `2px dashed #${teamColour}`)
+                }
+            }
+
+            $('#driver-info').on('click', function () {
+                resetH2h()
+                $("#h2h-box").hide()
+                $('#view-season-text').html('&#8681 VIEW FULL SEASON RESULTS &#8681')
+                $('.initial-message').show()
+                $('.initial-message').text('Select a driver to view driver information')
+                $('#driver-box').hide()
+                $('.sidebar-name').removeClass('selected')
+                $('.sidebar-name').removeClass('selectedSecond')
+                driverInfo = true
+            })
+
+            $('#view-season-box').on('click', function () {
+                if ($('#view-season-text').text().includes('RETURN')) {
+                    $('#view-season-text').html('&#8681 VIEW FULL SEASON RESULTS &#8681')
+                    document.getElementById('first-page').scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    })
+                } else {
+                    $('#view-season-text').html('&#8679 RETURN TO DRIVE PROFILE &#8679')
+                    document.getElementById('second-page').scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    })
+                }
+            })
+
+            $('#head-to-head').on('click', function () {
+                driver1 = null
+                driver2 = null
+                driverInfo = false
+                $('#driver-box').hide()
+                $('.initial-message').text("Select two drivers to view head-to-head")
+                $('.initial-message').show()
+                $('.sidebar-name').removeClass('selected')
+            })
+        })
+
+    </script>
+</head>
+
+<body>
+    <div class="header">
+        <b>data <span class="logo-f1">F1</span></b>
+        <div class="header-divider"></div>
+        <p class="header-item" id="driver-info">Driver Info</p>
+        <p class="header-item" id="head-to-head">Head-to-Head</p>
+    </div>
+    <div class="main-content-box">
+        <div id="driver-sidebar"></div>
+        <div class="initial-message">
+            <p>Select a driver to view driver information</p>
+        </div>
+        <div id="driver-box">
+            <div id="first-page">
+                <div id="driver-profile">
+                    <div id="info-wrapper">
+                        <div id="driver-headshot"></div>
+                        <div id="basic-info">
+                            <p id="driver-last-name"></p>
+                            <p id="driver-first-name"></p>
+                            <div id="team-info">
+                                <div id="team-colour"></div>
+                                <p id="team-name"></p>
+                            </div>
+                            <p class="info-line">Nationality: <span id="driver-nationality"></span></p>
+                            <p class="info-line">Date of Birth: <span id="driver-dob"></span></p>
+                        </div>
+                    </div>
+                    <div id="career-stats">
+                        <p id="stats-text">Career Statistics</p>
+                        <p class="info-line">Championships: <span id="driver-championships"></span></p>
+                        <p class="info-line">Wins: <span id="driver-wins"></span></p>
+                        <p class="info-line">Podiums: <span id="driver-podiums"></span></p>
+                        <p class="info-line">Points: <span id="driver-points"></span></p>
+                    </div>
+                </div>
+                <div id="driver-data">
+                    <div id="data-wrapper">
+                        <div id="driver-form"></div>
+                        <div id="skill-profile"></div>
+                    </div>
+                    <div id="championship-positions"></div>
+                </div>
+            </div>
+            <div id="view-season-box">
+                <p id="view-season-text">&#8681 VIEW FULL SEASON RESULTS &#8681</p>
+            </div>
+            <div id="second-page">
+                <div id="full-season"></div>
+            </div>
+        </div>
+        <div id="h2h-box">
+            <div id="drivers-header">
+                <div class="h2h-driver" id="driver-one">
+                    <div class="h2h-headshot-box" id="driver1-headshot-box"></div>
+                    <div class="h2h-info" id="driver1-info">
+                        <p class="h2h-name" id="driver1-name"></p>
+                        <div class="h2h-team" id="driver1-team">
+                            <div class="h2h-team-colour" id="driver1-team-colour"></div>
+                            <p class="h2h-team-name" id="driver1-team-text"></p>
+                        </div>
+                        <div class="h2h-line" id="driver1-line"></div>
+                    </div>
+                </div>
+                <p id="versus-text">VS</p>
+                <div class="h2h-driver" id="driver-two">
+                    <div class="h2h-info" id="driver2-info">
+                        <p class="h2h-name" id="driver2-name"></p>
+                        <div class="h2h-team" id="driver2-team">
+                            <p class="h2h-team-name" id="driver2-team-text"></p>
+                            <div class="h2h-team-colour" id="driver2-team-colour"></div>
+                        </div>
+                        <div class="h2h-line" id="driver2-line"></div>
+                    </div>
+                    <div class="h2h-headshot-box" id="driver2-headshot-box"></div>
+                </div>
+            </div>
+            <div id="data-comparison">
+                <div id="top-row">
+                    <div id="form-comparison"></div>
+                    <div id="skill-comparison"></div>
+                </div>
+                <div id="points-comparison"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
