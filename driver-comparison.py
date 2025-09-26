@@ -234,7 +234,7 @@ def getDriverStandings():
                     
                 #print(f"Round {roundNum} - driver: {driverId}, position: {position}")
                 
-                allStandings[driverId].append(f"{roundNum}&{position}%{points}")
+                allStandings[driverId].append(f"{roundNum}&{position}&{points}")
         
         except Exception as e:
             print(f"Unexpected error: {e}")
