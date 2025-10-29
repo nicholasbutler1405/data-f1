@@ -1,0 +1,524 @@
+:root {
+    --accent: rgb(255, 208, 37);
+    --red-accent: rgb(255, 30, 22);
+    --accent-second: rgba(255, 208, 37, 0.5);
+    --accent-transparent: rgba(255, 208, 37, 0.1);
+}
+
+.funnel-display {
+    font-family: "Funnel Display", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+}
+
+body {
+    font-family: "Funnel Display";
+    height: 100vh;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: rgb(250, 250, 250);
+}
+
+.main-content-box {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    overflow: hidden;
+    min-height: 0;
+}
+
+.header {
+    font-size: 40px;
+    width: 100%;
+    border-bottom: 1px solid gray;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.header b {
+    cursor: pointer;
+}
+
+.header-divider {
+    width: 1px;
+    background-color: gray;
+    margin: 0;
+    margin-right: 15px;
+    height: 100%;
+}
+
+.header-item {
+    margin: 0;
+    font-size: 20px;
+    height: calc(100% + 30px);
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.header-item:hover {
+    background-color: var(--accent);
+}
+
+.logo-f1 {
+    background-color: var(--accent);
+    padding: 5px;
+    border-radius: 5px;
+    margin-right: 15px;
+}
+
+#driver-sidebar {
+    font-size: 13px;
+    width: 180px;
+    min-width: 180px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    border-right: 1px solid gray;
+    position: sticky;
+    top: 0;
+}
+
+#driver-box {
+    flex: 1;
+    padding: 10px;
+    padding-top: 0px;
+    display: none;
+    flex-direction: column;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+#first-page {
+    height: calc(100% - 66px);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding-top: 10px;
+    /*background-color: darkseagreen;*/
+    flex: 1;
+}
+
+.initial-message {
+    flex: 1;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: gray;
+    font-size: 30px;
+}
+
+.sidebar-name {
+    /*padding: 5px;*/
+    margin: 0px;
+    cursor: pointer;
+    height: calc(100% / 21);
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
+}
+
+.sidebar-name.selected {
+    font-weight: bold;
+    background-color: var(--accent);
+}
+
+.sidebar-name.selectedSecond {
+    font-weight: bold;
+    background-color: var(--accent-second);
+}
+
+.sidebar-name:hover {
+    background-color: var(--accent);
+}
+
+#driver-headshot {
+    height: 30vh;
+    width: 30vh;
+    border: 1px solid rgb(195, 195, 195);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.headshot-image {
+    height: 100%;
+    width: 100%;
+}
+
+#driver-first-name {
+    padding: 0;
+    margin: 0;
+    font-size: 20px;
+    color: gray;
+    margin-bottom: 5px;
+}
+
+#driver-last-name {
+    padding: 0;
+    margin: 0;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+#team-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#team-colour {
+    width: 5px;
+    height: 30px;
+}
+
+#team-name {
+    margin: 0;
+    margin-left: 5px;
+}
+
+.info-line {
+    padding: 0;
+    margin: 0;
+    margin-top: 5px;
+    font-size: 15px;
+}
+
+#stats-text {
+    font-size: 25px;
+    padding: 0;
+    margin: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+#info-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+#basic-info {
+    display: flex;
+    flex-direction: column;
+    margin-left: 0;
+    margin-top: 10px;
+}
+
+#driver-profile {
+    display: flex;
+    flex-direction: column;
+    /*background-color: mediumslateblue;*/
+}
+
+#driver-data {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 50px;
+    /*background-color: firebrick;*/
+    flex: 1;
+    gap: 20px;
+}
+
+#data-wrapper {
+    display: flex;
+    flex-direction: row;
+    height: calc(50% - 10px);
+    gap: 20px;
+}
+
+#driver-form,
+#skill-profile {
+    width: 50%;
+    height: 100%;
+    border: 1px solid gray;
+    box-sizing: border-box;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    /*background-color: aqua;*/
+}
+
+#form-chart {
+    max-height: 100%;
+    max-width: 100%;
+}
+
+h3 {
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+#skill-profile h3 {
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+#championship-positions {
+    padding: 5px;
+    width: 100%;
+    height: calc(50% - 10px);
+    border: 1px solid gray;
+    box-sizing: border-box;
+    /*background-color: aqua;*/
+}
+
+#championship-chart {
+    max-height: 85%;
+    max-width: 100%;
+}
+
+#skill-chart {
+    max-height: 95%;
+    max-width: 100%;
+}
+
+#view-season-box {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    /*background-color: gold;*/
+    padding: 20px;
+    flex-shrink: 0;
+}
+
+#view-season-box:hover {
+    background-color: #ddd;
+}
+
+#view-season-text {
+    margin: 0;
+    font-size: 20px;
+}
+
+#second-page {
+    width: 100%;
+    min-height: calc(100% - 65px);
+    display: flex;
+    justify-content: center;
+    /*background-color: lightgreen;*/
+}
+
+#full-season {
+    width: 95%;
+    height: 95%;
+    border: 1px solid gray;
+    box-sizing: border-box;
+    padding: 5px;
+    /*background-color: aqua;*/
+}
+
+#season-chart {
+    max-height: 90%;
+    max-width: 100%;
+}
+
+#h2h-box {
+    display: none;
+    flex: 1;
+    padding: 10px;
+    padding-top: 0;
+    overflow-y: auto;
+    min-height: 0;
+    /*background-color: aqua;*/
+}
+
+#drivers-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid gray;
+    position: sticky;
+    top: 0;
+    background-color: rgb(250, 250, 250);
+    z-index: 10;
+    padding-top: 10px;
+}
+
+#view-h2h-points-box {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    /*background-color: gold;*/
+    padding: 20px;
+    flex-shrink: 0;
+}
+
+#view-h2h-points-box:hover {
+    background-color: #ddd;
+}
+
+#view-h2h-points-text {
+    margin: 0;
+    font-size: 20px;
+}
+
+#h2h-second-page {
+    width: 100%;
+    height: calc(100% - 235px);
+    display: flex;
+    justify-content: center;
+    /*background-color: blue;*/
+}
+
+#h2h-points {
+    width: 95%;
+    height: 95%;
+    border: 1px solid gray;
+    box-sizing: border-box;
+    padding: 5px;
+}
+
+#h2h-points-chart {
+    max-height: 90%;
+    max-width: 90%;
+}
+
+.h2h-driver {
+    display: flex;
+    flex-direction: row;
+}
+
+.h2h-headshot-box {
+    height: 22vh;
+    width: 22vh;
+    border: 1px solid gray
+}
+
+.h2h-info {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#driver2-info {
+    text-align: right;
+}
+
+.h2h-name {
+    font-size: 25px;
+    font-weight: bold;
+    margin: 0;
+}
+
+#driver2-name {
+    text-align: right;
+}
+
+.h2h-team {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+#driver2-team {
+    justify-content: flex-end;
+}
+
+.h2h-team-colour {
+    width: 5px;
+    height: 30px;
+}
+
+.h2h-team-name {
+    font-size: 15px;
+    margin-left: 5px;
+}
+
+#driver2-team-text {
+    margin-left: 0;
+    margin-right: 5px;
+}
+
+.h2h-line {
+    height: 0px;
+    width: 200px;
+    border: 2px solid;
+}
+
+#versus-text {
+    color: gray;
+    font-size: 40px;
+    font-weight: bolder;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.h2h-last-name {
+    font-size: 30px;
+}
+
+#h2h-first-page {
+    /*height: calc(100% - 225px);*/
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#data-comparison {
+    display: flex;
+    flex-direction: column;
+    /*background-color: aquamarine;*/
+    height: auto;
+    scroll-margin-top: 100vh;
+}
+
+#top-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 10px;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-start;
+    /*background-color: burlywood;*/
+    height: 52vh;
+}
+
+#form-comparison,
+#skill-comparison {
+    border: 1px solid gray;
+    /*height: 52vh;*/
+    height: 100%;
+    width: 45%;
+    padding: 5px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+#h2h-form-chart {
+    max-height: 90%;
+    max-width: 100%;
+}
+
+#h2h-skill-chart {
+    max-height: 90%;
+    max-width: 100%;
+}
